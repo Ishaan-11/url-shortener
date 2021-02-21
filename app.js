@@ -1,12 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const ejs = require("ejs");
+const connectDB = require("./config/db");
 
 const app = express();
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+// Connect to database
+connectDB();
 
 
 /* Routes */
