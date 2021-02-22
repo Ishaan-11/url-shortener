@@ -2,7 +2,7 @@ const e = require("express");
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 // @route     GET /login
 // @desc      Render Login view
@@ -15,24 +15,24 @@ router.get("/", function(req, res) {
 // @desc      Login user
 router.post("/",function(req, res) {
   try {
-    const { username: email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (email && password) {
-      User.findOne({email: email}, function(err, foundUser) {
+    if (username && password) {
+      let user = new User({username, password});
+
+      req.login(user, function(err) {
         if (err) {
-          res.status(500).json("User cannot be fetched!");
+          res.status(500).json("Cannot Login!"); 
         } else {
-          if (foundUser) {
-            bcrypt.compare(password, foundUser.password, function(err, result) {
-              if(result === true) {
-                res.render("url/show");
-              } else {
-                res.status(422).json("Wrong password!");
-              }
-            });
-          } else {
-            res.status(404).json("User does not exits");
-          }
+          passport.authenticate("local", function(err, user, info) {
+            if (err) { 
+              res.status(500).json("Server error!"); 
+            }
+            if (!user) { 
+              res.status(404).json(info.message);
+            }
+            res.redirect("/url");
+          })(req, res);
         }
       });
     } else {
