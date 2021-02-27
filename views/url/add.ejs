@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <i class="fas fa-cut fa-6x"></i>
+    <h2 class="display-3">Create your Url!</h2>
+    <hr>
+
+    <form action="/url/add" method="POST">
+      <div class="form-group">
+        <input type="url" class="form-control text-center" name="fullUrl" placeholder="Full Url" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control text-center" name="shortUrl" placeholder="Short Url">
+        <small class="form-text text-muted text-center">(Leave short url blank to create random short url)</small>
+      </div>
+      <button type="submit" class="btn btn-dark">Shrink</button>
+    </form>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

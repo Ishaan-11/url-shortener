@@ -3,11 +3,30 @@
 <div class="jumbotron text-center">
   <div class="container">
     <i class="fas fa-cut fa-6x"></i>
-    <h1 class="display-3">Here are your short url's!</h1>
+    <h1 class="display-3">Your short url's!</h1>
     <hr>
-    
-    <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
-    <a class="btn btn-dark btn-lg" href="/submit" role="button">Create a short Url</a>
+    <table class="table table-striped ">
+      <thead class="thead-dark">
+        <tr>
+          <th>Full URL</th>
+          <th>Short URL</th>
+          <th>Clicks</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% shortUrls.forEach(shortUrl => { %>
+          <tr>
+            <td><a href="<%= shortUrl.fullUrl %>"><%= shortUrl.fullUrl %></a></td>
+            <td><a href="<%= shortUrl.shortUrl %>"><%= shortUrl.shortUrl %></a></td>
+            <td><%= shortUrl.clicks %></td>
+            <td><%= new Date(shortUrl.date).toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <a class="btn btn-light btn-lg mr-3" href="/logout" role="button">Log Out</a>
+    <a class="btn btn-dark btn-lg" href="/url/add" role="button">New Url</a>
   </div>
 </div>
 
