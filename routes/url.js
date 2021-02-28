@@ -65,30 +65,30 @@ router.post("/add", async function(req, res) {
 
           if (checkShortUrl) {
             res.status(409).json("Short Url already exist!. Please provide a another url!");
-          }
-
-          url = new Url({
-            fullUrl,
-            shortUrl,
-            date: new Date()
-          });
+          } else {
+            url = new Url({
+              fullUrl,
+              shortUrl,
+              date: new Date()
+            });
   
-          url.save(function (err) {
-            if (err) {
-              res.status(500).json("Url cannot be created!");
-            } else {
-              //save url to its user
-              User.findOne({_id: req.user.id}, function(err, foundUser) {
-                foundUser.urls.push(url);
-                foundUser.save(function(err) {
-                  if (err) {
-                    res.status(500).json("Cannot save url in user!");
-                  }
-                  res.redirect("/url");
+            url.save(function (err) {
+              if (err) {
+                res.status(500).json("Url cannot be created!");
+              } else {
+                //save url to its user
+                User.findOne({_id: req.user.id}, function(err, foundUser) {
+                  foundUser.urls.push(url);
+                  foundUser.save(function(err) {
+                    if (err) {
+                      res.status(500).json("Cannot save url in user!");
+                    }
+                    res.redirect("/url");
+                  });
                 });
-              });
-            }
-          });
+              }
+            });
+          }
         }
       } catch (err) {
         console.error(err);
