@@ -10,14 +10,24 @@ const router = express.Router();
 // @desc      Render url show view
 router.get("/", async function(req, res) {
   if(req.isAuthenticated()) {
-    let shortUrls = [];
-    if (req.user.role === 'admin') {
-      shortUrls = await Url.find();
-    } else {
-      const user = await User.findOne({_id: req.user.id});
-      shortUrls = user.urls;
-    }
+    const {urls: shortUrls} = await User.findOne({_id: req.user.id});
     res.render("url/show", { shortUrls });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+
+// @route     GET /url/admin
+// @desc      Render url admin view
+router.get("/admin", async function(req, res) {
+  if(req.isAuthenticated()) {
+    if (req.user.role === 'admin') {
+      const users = await User.find({"username": {$ne : req.user.username}});
+      res.render("url/admin", { users });
+    } else {
+      res.redirect("/url");
+    }
   } else {
     res.redirect("/login");
   }

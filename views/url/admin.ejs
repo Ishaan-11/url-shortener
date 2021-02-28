@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <i class="fas fa-cut fa-6x"></i>
+    <h1 class="display-3">Your short url's!</h1>
+    <hr>
+    <table class="table table-striped ">
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th>User</th>
+          <th>Full URL</th>
+          <th>Short URL</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((user, index) => { %>
+          <tr class="table-dark">
+            <td><%= index+1 %></td>
+            <td><%= user.username %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% user.urls.forEach(url => { %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><a href="<%= url.fullUrl %>"><%= url.fullUrl %></a></td>
+              <td><a href="<%= url.shortUrl %>"><%= url.shortUrl %></a></td>
+              <td><%= new Date(url.date).toLocaleString() %></td>
+            </tr>
+          <% }) %>
+        <% }) %>
+      </tbody>
+    </table>
+    <a class="btn btn-light btn-lg mr-3" href="/logout" role="button">Log Out</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
