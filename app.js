@@ -25,11 +25,11 @@ connectDB();
 
 
 /* Routes */
-app.use("/", require("./routes/index"));
 app.use("/login", require("./routes/login"));
 app.use("/register", require("./routes/register"));
 app.use("/url", require("./routes/url"));
 app.use("/logout", require("./routes/logout"));
+app.use("/", require("./routes/index"));
 
 
 
@@ -37,8 +37,3 @@ app.use("/logout", require("./routes/logout"));
 app.listen(3000, function() {
   console.log("Server started on port 3000.");
 });
-
-
-// TODO
-// shorturl
-// error messages banner
