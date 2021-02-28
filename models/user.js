@@ -8,7 +8,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Username is required!"],
   },
-  urls: [urlSchema]
+  urls: [urlSchema],
+  role: {
+    type: String,
+    required: true,
+    default: "other"
+  },
   /* password: {
     type: String,
     required: [true, "Password is required!"],

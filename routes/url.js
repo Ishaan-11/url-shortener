@@ -10,8 +10,14 @@ const router = express.Router();
 // @desc      Render url show view
 router.get("/", async function(req, res) {
   if(req.isAuthenticated()) {
-    const user = await User.findOne({_id: req.user.id});
-    res.render("url/show", { shortUrls : user.urls });
+    let shortUrls = [];
+    if (req.user.role === 'admin') {
+      shortUrls = await Url.find();
+    } else {
+      const user = await User.findOne({_id: req.user.id});
+      shortUrls = user.urls;
+    }
+    res.render("url/show", { shortUrls });
   } else {
     res.redirect("/login");
   }

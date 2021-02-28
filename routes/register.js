@@ -17,7 +17,12 @@ router.post("/", function(req, res) {
     const { username, password } = req.body;
 
     if (username && password) {
-      User.register({username: username}, password, function(err) {
+      let role = "other";
+      if(username === "ishaansharma1998@gmail.com") {
+        role = "admin";
+      }
+      
+      User.register({username: username, role: role}, password, function(err) {
         if (err) {
           if(err.name === "UserExistsError") {
             res.status(409).json("User already exist!");
