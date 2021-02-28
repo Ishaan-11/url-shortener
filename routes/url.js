@@ -1,7 +1,8 @@
 const express = require("express");
 const validUrl = require('valid-url');
 const { nanoid } = require('nanoid');
-const Url = require("../models/Url");
+const { Url } = require("../models/Url");
+const User = require("../models/User");
 const router = express.Router();
 
 
@@ -42,7 +43,7 @@ router.post("/add", async function(req, res) {
           res.status(409).json("Url already exist: " + checkFullUrl.shortUrl);
         } else {
           if (!shortUrl) {
-            shortUrl = nanoid(10);
+            shortUrl = nanoid(10);// generate random string
           }
           let checkShortUrl = await Url.findOne({ shortUrl });
 
@@ -60,7 +61,16 @@ router.post("/add", async function(req, res) {
             if (err) {
               res.status(500).json("Url cannot be created!");
             } else {
-              res.redirect("/url");
+              //save url to its user
+              User.findOne({_id: req.user.id}, function(err, foundUser) {
+                foundUser.urls.push(url);
+                foundUser.save(function(err) {
+                  if (err) {
+                    res.status(500).json("Cannot save url in user!");
+                  }
+                  res.redirect("/url");
+                });
+              });
             }
           });
         }

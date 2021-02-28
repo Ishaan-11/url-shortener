@@ -1,5 +1,5 @@
 const express = require("express");
-const Url = require("../models/Url");
+const { Url } = require("../models/Url");
 const router = express.Router();
 
 
@@ -17,15 +17,7 @@ router.get('/:shortUrl', async function(req, res) {
     const url = await Url.findOne({ shortUrl: req.params.shortUrl });
 
     if (url) {
-      url.clicks++
-        
-      url.save(function (err) {
-        if (err) {
-          res.status(500).json("Url cannot be saved!");
-        } else {
-          return res.redirect(url.fullUrl);
-        }
-      });
+      return res.redirect(url.fullUrl);
     } else {
       return res.status(404).json('No url found!');
     }

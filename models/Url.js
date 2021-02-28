@@ -9,11 +9,11 @@ const urlSchema = new mongoose.Schema({
     type: String,
     required: [true, "Short Url is required!"]
   },
-  clicks: {
+/*   clicks: {
     type: Number,
     required: true,
     default: 0
-  },
+  }, */
   date: { 
     type: String, 
     required: true,
@@ -21,4 +21,9 @@ const urlSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Url', urlSchema);
+let Url =  mongoose.model('Url', urlSchema);
+
+module.exports = {
+  Url,
+  urlSchema
+}
