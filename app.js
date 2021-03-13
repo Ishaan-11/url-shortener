@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+app.enable('trust proxy');
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
