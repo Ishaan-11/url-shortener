@@ -17,9 +17,14 @@ router.get('/:shortUrl', async function(req, res) {
     const url = await Url.findOne({ shortUrl: req.params.shortUrl });
 
     if (url) {
-      return res.redirect(url.fullUrl);
+      let currUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      if (url.fullUrl !== currUrl) { //check for infinite redirect
+        res.redirect(url.fullUrl);
+      } else {
+        res.redirect('/login');
+      }
     } else {
-      res.render('home', {success: false, error: "No url found!"});
+      res.render('404');
     }
   } catch (err) {
     console.error(err);
