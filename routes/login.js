@@ -22,25 +22,25 @@ router.post("/",function(req, res) {
 
       req.login(user, function(err) {
         if (err) {
-          res.status(500).json("Cannot Login!"); 
+          res.render('login', {success: false, error: "Cannot Login!"});
         } else {
           passport.authenticate("local", function(err, user, info) {
             if (err) { 
-              res.status(500).json("Server error!"); 
+              res.render('login', {success: false, error: "Server error!"});
             }
             if (!user) { 
-              res.status(404).json(info.message);
+              res.render('login', {success: false, error: info.message});
             }
             res.redirect("/url");
           })(req, res);
         }
       });
     } else {
-      res.status(422).json("Invalid Input");
+      res.render('login', {success: false, error: "Invalid Input"});
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json('Login: Server error');
+    res.render('login', {success: false, error: "Login: Server error"});
   }
 });
 

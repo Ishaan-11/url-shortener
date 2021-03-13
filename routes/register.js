@@ -24,11 +24,12 @@ router.post("/", function(req, res) {
       
       User.register({username: username, role: role}, password, function(err) {
         if (err) {
+          let errorMsg = "User cannot be registerd!";
           if(err.name === "UserExistsError") {
-            res.status(409).json("User already exist!");
+            errorMsg = "User already exist!";
           }
 
-          res.status(500).json("User cannot be registerd!");
+          res.render('register', {success: false, error: errorMsg});
         } else {
           passport.authenticate("local")(req, res, function() {
             res.redirect("/url");
@@ -36,11 +37,11 @@ router.post("/", function(req, res) {
         }
       });
     } else {
-      res.status(422).json("Invalid Input");
+      res.render('register', {success: false, error: "Invalid Input"});
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json('Register: Server error');
+    res.render('register', {success: false, error: "Register: Server error"});
   }
 });
 

@@ -56,7 +56,7 @@ router.post("/add", async function(req, res) {
         let checkFullUrl = await Url.findOne({ fullUrl });
   
         if (checkFullUrl) {
-          res.status(409).json("Url already exist: " + checkFullUrl.shortUrl);
+          res.render('url/add', {success: false, error: "Url already exist!"});
         } else {
           if (!shortUrl) {
             shortUrl = nanoid(10);// generate random string
@@ -64,7 +64,7 @@ router.post("/add", async function(req, res) {
           let checkShortUrl = await Url.findOne({ shortUrl });
 
           if (checkShortUrl) {
-            res.status(409).json("Short Url already exist!. Please provide a another url!");
+            res.render('url/add', {success: false, error: "Short Url already exist!. Please provide a another url!"});
           } else {
             url = new Url({
               fullUrl,
@@ -74,14 +74,14 @@ router.post("/add", async function(req, res) {
   
             url.save(function (err) {
               if (err) {
-                res.status(500).json("Url cannot be created!");
+                res.render('url/add', {success: false, error: "Url cannot be created!"});
               } else {
                 //save url to its user
                 User.findOne({_id: req.user.id}, function(err, foundUser) {
                   foundUser.urls.push(url);
                   foundUser.save(function(err) {
                     if (err) {
-                      res.status(500).json("Cannot save url in user!");
+                      res.render('url/add', {success: false, error: "Cannot save url in user!"});
                     }
                     res.redirect("/url");
                   });
@@ -92,10 +92,10 @@ router.post("/add", async function(req, res) {
         }
       } catch (err) {
         console.error(err);
-        res.status(500).json('Server error');
+        res.render('url/add', {success: false, error: "Server error"});
       }
     } else {
-      res.status(401).json('Invalid long url');
+      res.render('url/add', {success: false, error: "Invalid long url"});
     }
   } else {
     res.redirect("/login");

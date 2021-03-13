@@ -19,11 +19,11 @@ router.get('/:shortUrl', async function(req, res) {
     if (url) {
       return res.redirect(url.fullUrl);
     } else {
-      return res.status(404).json('No url found!');
+      res.render('home', {success: false, error: "No url found!"});
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json('Server error');
+    res.render('home', {success: false, error: "Server error"});
   }
 })
 
