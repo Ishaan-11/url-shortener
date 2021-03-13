@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require('express-session');
+const session = require('cookie-session');
 const passport = require('passport');
 const connectDB = require("./config/db");
 
@@ -11,6 +11,9 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+  },
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
