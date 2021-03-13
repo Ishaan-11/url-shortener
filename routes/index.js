@@ -18,6 +18,7 @@ router.get('/:shortUrl', async function(req, res) {
 
     if (url) {
       let currUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+      console.log(currUrl);
       if (url.fullUrl !== currUrl) { //check for infinite redirect
         res.redirect(url.fullUrl);
       } else {
