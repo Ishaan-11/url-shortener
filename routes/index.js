@@ -22,10 +22,10 @@ router.get('/:shortUrl', async function(req, res) {
       if (url.fullUrl !== currUrl) { //check for infinite redirect
         res.redirect(url.fullUrl);
       } else {
-        res.redirect('/login');
+        res.render('home', {success: false, error: "Infinite redirect detected!"});
       }
     } else {
-      res.render('404');
+      res.render('home', {success: false, error: "Url not found"});
     }
   } catch (err) {
     console.error(err);
