@@ -28,8 +28,8 @@
             <tr>
               <td></td>
               <td></td>
-              <td><a href="<%= url.fullUrl %>"><%= url.fullUrl %></a></td>
-              <td><a href="<%= url.shortUrl %>"><%= url.shortUrl %></a></td>
+              <td><a href="<%= url.fullUrl %>" target="_blank"><%= url.fullUrl %></a></td>
+              <td><a href="<%= url.shortUrl %>" target="_blank"><%= url.shortUrl %></a></td>
               <td><%= new Date(url.date).toLocaleString() %></td>
             </tr>
           <% }) %>

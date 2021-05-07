@@ -19,8 +19,8 @@
         <tbody>
           <% shortUrls.forEach(shortUrl => { %>
             <tr>
-              <td><a href="<%= shortUrl.fullUrl %>"><%= shortUrl.fullUrl %></a></td>
-              <td><a href="<%= shortUrl.shortUrl %>"><%= shortUrl.shortUrl %></a></td>
+              <td><a href="<%= shortUrl.fullUrl %>" target="_blank"><%= shortUrl.fullUrl %></a></td>
+              <td><a href="<%= shortUrl.shortUrl %>" target="_blank"><%= shortUrl.shortUrl %></a></td>
               <td><%= new Date(shortUrl.date).toLocaleString() %></td>
             </tr>
           <% }) %>
