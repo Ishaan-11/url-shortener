@@ -24,11 +24,11 @@
   "homepage": "https://github.com/Ishaan-11/url-shortener#readme",
   "dependencies": {
     "body-parser": "^1.20.3",
-    "cookie-session": "^1.4.0",
+    "cookie-session": "^2.1.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "express-session": "^1.18.1",
+    "express-session": "^1.18.2",
     "mongoose": "^8.9.5",
     "nanoid": "^3.3.8",
     "passport": "^0.6.0",
